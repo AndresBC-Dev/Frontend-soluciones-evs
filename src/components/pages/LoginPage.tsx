@@ -4,8 +4,8 @@ import { useForm } from 'react-hook-form';
 import type { SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
-import { useAuth } from '../../hooks/useAuth';
-import { authService } from '../../api/auth';
+import { useAuth } from '../../hooks/useAuth'; 
+import { authService } from '../../api/auth'; 
 import logo from '../../assets/soluciones-logo.png';
 import handshake from '../../assets/login-image.jpg';
 
@@ -28,6 +28,8 @@ const LoginPage: React.FC = () => {
   const [showPassword, setShowPassword] = useState(false);
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
+  
+  // ✅ Usamos tu hook useAuth personalizado
   const { loginUser } = useAuth();
 
   const {
@@ -46,8 +48,15 @@ const LoginPage: React.FC = () => {
     setLoading(true);
     setErrorMsg('');
     try {
-      const response = await authService.login({ username: data.email, password: data.password });
+      // ✅ Llamamos al servicio de autenticación
+      const response = await authService.login({ 
+        username: data.email, 
+        password: data.password 
+      });
+      
+      // ✅ Usamos loginUser de tu contexto
       loginUser(response.data);
+      
     } catch (error: any) {
       const status = error.response?.status;
       let msg = 'Error al iniciar sesión';
